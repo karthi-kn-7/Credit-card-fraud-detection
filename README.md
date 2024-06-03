@@ -17,34 +17,32 @@ And we stored the predicted value in separate variables,like;
 	yLR - predicted value from Linear Regression
 	similarly yKNN and yLDA.
 
-after this, created a list POR with size = length(yKNN)
-and initialized to 0
+after this, created a list POR with size = length(yKNN) and initialized to 0
 
 Preprocessing :
 	1.Label encoding
 	2.removing certain column
-	3.SMOTE (it is kind to over sampling method but instead of just 	  copying the minority class value , this generate synthetic data.)
-	  the reason to choose SMOTE because it was better compare to other 	  methods like (under sampling , over sampling, without handling   	  the imbalance dataset-just the raw data)
+	3.SMOTE (it is kind to over sampling method but instead of just copying the minority class value , this generate synthetic data.)
+	  the reason to choose SMOTE because it was better compare to other methods like (under sampling , over sampling, without handling the imbalance dataset-just the raw data)
 
 The algorithm:
-#this is actually the code 
-it is just if-else so i assume you can understand.
-mvl=sum(ypre_lr)/len(ypre_lr)
-por=[0]*len(ytest)
-for i in range(0,len(ypre_lr)):
-    if(ypre_knn[i]==0 or ypre_lda[i]==0):
-        if(ypre_lr[i]<mvl):
-            por[i]=0
-    elif(ypre_knn[i]==1 or ypre_lda[i]==1):
-        if(ypre_lr[i]>mvl):
-            por[i]=1
-    else:
-        por[i]=ypre_knn[i]
+1. Calculate the mean value of the predictions from the linear regression model:
+   - mean_value_lr = sum(predictions_lr) / length(predictions_lr)
+2. Initialize an empty list 'por' of the same length as the test set with all elements set to 0.
+3. Loop through each element in the test set:
+   - For each index i from 0 to length(predictions_lr) - 1:
+       - If the prediction from the KNN model or the LDA model is 0:
+           - If the prediction from the linear regression model is less than mean_value_lr:
+               - Set por[i] to 0
+       - Else if the prediction from the KNN model or the LDA model is 1:
+           - If the prediction from the linear regression model is greater than mean_value_lr:
+               - Set por[i] to 1
+       - Otherwise:
+           - Set por[i] to the prediction from the KNN model
 
 now we finally evaluated this by comparing the por with the true value.And also we compare this with other top 4 ML models as well.
 
 DataSet1_train_test_split_optimized.ipynb - THIS FILE HAS THE COMPARISION WITH THE OTHER MODELS.
-
 DataSet1_over_under_sampling.ipynb - THIS FILE HAS THE COMPARISION OF DIFFERERNT TYPES IN WHICH WE CAN HANDLE THE IMBALANCE DATASET.
 
 
